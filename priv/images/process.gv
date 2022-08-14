@@ -1,0 +1,32 @@
+digraph G {
+  rankdir=LR;
+  size = "10,10";
+  subgraph cluster0 {
+    label = "Framework"
+    node [style=filled,color=white]
+    style=filled;
+    color=lightgrey;
+    "code base"  [shape="folder", fontcolor=red];
+    "code base" -> "code / migration" -> "SQL script"[style=dotted];
+    "code base" -> "model/schema" [style=dotted];
+  }
+
+  subgraph cluster1 {
+    label = "DBML"
+    node [style=filled];
+    color=blue
+    "code" [shape="folder", fontcolor=red]
+    "code" -> SQL [style=dotted, label="@dbml/cli", dir=both];
+  }
+
+  DB [shape=cylinder];
+  SQL -> "SQL script" [style=dotted];
+  "SQL script" -> DB [label="migration"];
+  ERD [shape="tab", color=blue, style="filled", fillcolor=yellow];
+  DB -> ERD [label="Planter"];
+  SQL -> DB [label="psql"];
+  code -> ERD [label="dbdiagram.io"];
+  "model/schema" -> ERD [label="ecto_erd"];
+}
+
+// dot -Tpng graf.gv -o graf.png

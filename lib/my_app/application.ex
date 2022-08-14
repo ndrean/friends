@@ -1,4 +1,4 @@
-defmodule Friends.Application do
+defmodule MyApp.Application do
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
@@ -7,13 +7,13 @@ defmodule Friends.Application do
 
   @impl true
   def start(_type, _args) do
+    Ecto.DevLogger.install(MyApp.Repo)
+
     children = [
-      Friends.Repo
+      MyApp.Repo
     ]
 
-    # See https://hexdocs.pm/elixir/Supervisor.html
-    # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: Friends.Supervisor]
+    opts = [strategy: :one_for_one, name: MyApp.Supervisor]
     Supervisor.start_link(children, opts)
   end
 end

@@ -1,9 +1,15 @@
-defmodule Friends.Repo.Migrations.CreateActors do
+defmodule MyApp.Repo.Migrations.CreateActors do
   use Ecto.Migration
 
   def change do
-    create table(:actors) do
-      add :name, :string
+    create table(:actors, primary_key: false) do
+      add :id, :uuid, primary_key: true
+      add(:name, :string, null: false)
+      add(:status, :actor_status)
+
+      timestamps()
     end
+
+    create(unique_index(:actors, [:name]))
   end
 end

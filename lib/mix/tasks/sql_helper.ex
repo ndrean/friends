@@ -1,0 +1,63 @@
+# lib/mix/tasks/sql.ex
+defmodule Mix.Tasks.Sql.Clean do
+  @shortdoc "clean the migration file to raw SQL"
+
+  require Logger
+  use Mix.Task
+
+  @impl Mix.Task
+  def run(arg) do
+    # filename = System.argv()
+    case arg do
+      [] ->
+        Logger.debug("Please enter a filename")
+
+      [filename] ->
+        with {:ok, txt} <- File.read(filename) do
+          txt
+          |> String.split("\n")
+          |> Enum.filter(
+            &((String.contains?(&1, "CREATE") or String.contains?(&1, "ALTER")) and
+                not String.contains?(&1, "execute"))
+          )
+          |> Enum.map(&String.replace(&1, "[]", ";"))
+          # |> Enum.filter(&(not String.contains?(&1, "execute")))
+          |> to_string()
+          |> then(fn t -> File.write(filename, t) end)
+        end
+
+        System.cmd(
+          "echo",
+          ["\e[32m \u2714 \e[0m", " File ready for conversion to dbml"],
+          into: IO.stream()
+        )
+    end
+  end
+end
+
+# \033[0;32m \xE2\x9C\x94 \033[0m
+defmodule Mix.Tasks.Sql.Prepare do
+  @shortdoc "clean the migration file to raw SQL"
+
+  require Logger
+  use Mix.Task
+
+  @impl Mix.Task
+  def run(arg) do
+    # filename = System.argv()
+    case arg do
+      [] ->
+        Logger.debug("Please enter a filename")
+
+      [filename] ->
+        filename
+        |> File.write("COMMIT;", [:append])
+        |> then(fn _ ->
+          {:ok, txt} = File.read(filename)
+          File.write(filename, "BEGIN;" <> txt)
+        end)
+
+        System.cmd("echo", ["\e[32m \u2714 \e[0m", " Ready for transaction"], into: IO.stream())
+    end
+  end
+end

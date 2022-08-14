@@ -1,0 +1,27 @@
+changeset.change |> Repo.update
+
+
+`mix ecto.migrate --log-migrations-sql > migration-ecto.sql`
+
+
+Run migration of the generated SQL file from the code. Wrap each SQL command with an `execute`
+`mix ecto.migrate``
+
+```elixir
+def change up do
+  execute """
+    CREATE....
+  """
+  execute"""
+    CREATE...
+  """
+end
+```
+
+Run migration file generate by Ecto directly  with `psql`
+`mix ecto.create`
+`psql -d my_app_repo -f migration-ecto.sql``
+```sql
+BEGIN;
+CREATE....
+END;

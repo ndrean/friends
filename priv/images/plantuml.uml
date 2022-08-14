@@ -1,0 +1,62 @@
+@startuml
+hide circle
+skinparam linetype ortho
+
+entity "**actors**" {
+  + ""id"": //uuid [PK]//
+  --
+  *""name"": //character varying(255) //
+  ""status"": //actor_status //
+  *""inserted_at"": //timestamp(0) without time zone //
+  *""updated_at"": //timestamp(0) without time zone //
+}
+
+entity "**characters**" {
+  + ""id"": //bigserial [PK]//
+  --
+  *""name"": //character varying(255) //
+  *""movie_id"": //bigint [FK]//
+  *""inserted_at"": //timestamp(0) without time zone //
+  *""updated_at"": //timestamp(0) without time zone //
+}
+
+entity "**contracts**" {
+  + ""id"": //bigserial [PK]//
+  --
+  *""salary"": //double precision //
+  *""movie_id"": //bigint [FK]//
+  *""actor_id"": //uuid [FK]//
+  *""character_id"": //bigint [FK]//
+  *""inserted_at"": //timestamp(0) without time zone //
+  *""updated_at"": //timestamp(0) without time zone //
+}
+
+entity "**movies**" {
+  + ""id"": //bigserial [PK]//
+  --
+  *""title"": //character varying(255) //
+  *""producer_id"": //uuid [FK]//
+  *""inserted_at"": //timestamp(0) without time zone //
+  *""updated_at"": //timestamp(0) without time zone //
+}
+
+entity "**producers**" {
+  + ""id"": //uuid [PK]//
+  --
+  *""name"": //character varying(255) //
+  *""inserted_at"": //timestamp(0) without time zone //
+  *""updated_at"": //timestamp(0) without time zone //
+  ""address"": //text //
+}
+
+
+"**characters**"   }--  "**movies**"
+
+"**contracts**"   }--  "**actors**"
+
+"**contracts**"   }--  "**characters**"
+
+"**contracts**"   }--  "**movies**"
+
+"**movies**"   }--  "**producers**"
+@enduml
