@@ -104,4 +104,13 @@ defmodule DbTest do
 
     refute changeset.valid?
   end
+
+  test "check association actor/character" do
+    assert Queries.character_actor_query("C3") == ["A3", "A2"] and
+             Queries.actor_character_query("A1") == ["C1", "C2", "C4"]
+  end
+
+  test "nested association producer/actor: which actors for a given producer" do
+    assert Queries.producer_actors_query("P1") == ["A1", "A2", "A3"]
+  end
 end

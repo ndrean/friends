@@ -1,0 +1,4 @@
+{
+  "editor.linkedEditing": true,
+  "javascript.updateImportsOnFileMove.enabled": "always"
+}
