@@ -42,3 +42,6 @@ Producer
 
 [GIT] Remove node_modules from git add .
 => `git rm -r --cached .`
+
+- fancy trick:
+`\033[0;32m \xE2\x9C\x94 \033[0m` will produce a green tick

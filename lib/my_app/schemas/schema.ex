@@ -1,5 +1,7 @@
 defmodule MyApp.Schema do
-  # @shortdoc "make uuid available for every schema"
+  @moduledoc """
+  For uuid
+  """
 
   defmacro __using__() do
     quote do

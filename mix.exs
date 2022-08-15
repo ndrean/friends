@@ -11,7 +11,8 @@ defmodule MyApp.MixProject do
       aliases: aliases(),
       dialyzer: [
         plt_file: {:no_warn, "priv/plts/dialyzer.plt"},
-        plt_add_deps: :app_tree
+        plt_add_deps: [:app_tree],
+        plt_add_apps: [:mix]
       ]
     ]
   end

@@ -21,7 +21,6 @@ defmodule Mix.Tasks.Sql.Clean do
                 not String.contains?(&1, "execute"))
           )
           |> Enum.map(&String.replace(&1, "[]", ";"))
-          # |> Enum.filter(&(not String.contains?(&1, "execute")))
           |> to_string()
           |> then(fn t -> File.write(filename, t) end)
         end
@@ -35,9 +34,8 @@ defmodule Mix.Tasks.Sql.Clean do
   end
 end
 
-# \033[0;32m \xE2\x9C\x94 \033[0m
 defmodule Mix.Tasks.Sql.Prepare do
-  @shortdoc "clean the migration file to raw SQL"
+  @shortdoc "wrap the raw SQL for a commit"
 
   require Logger
   use Mix.Task

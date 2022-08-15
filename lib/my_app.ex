@@ -1,3 +1,3 @@
 defmodule MyApp do
-  alias MyApp.Repo
+  # alias MyApp.Repo
 end
